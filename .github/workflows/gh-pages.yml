@@ -2,7 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   build-and-deploy:
@@ -19,15 +20,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build (dynamic output folder & base-href)
-        run: |
-          REPO_NAME=${GITHUB_REPOSITORY##*/}
-          npm run build -- --configuration production --output-path=dist/$REPO_NAME --base-href "/$REPO_NAME/"
+      - name: Build production
+        run: npm run build -- --configuration production --output-path=dist --base-href "/TODO-list-app/"
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist/${{ github.repository_owner }} # placeholder, see note
+          folder: dist
           token: ${{ secrets.GITHUB_TOKEN }}
           clean: true
