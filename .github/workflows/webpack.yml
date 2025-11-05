@@ -1,0 +1,33 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (dynamic output folder & base-href)
+        run: |
+          REPO_NAME=${GITHUB_REPOSITORY##*/}
+          npm run build -- --configuration production --output-path=dist/$REPO_NAME --base-href "/$REPO_NAME/"
+
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist/${{ github.repository_owner }} # placeholder, see note
+          token: ${{ secrets.GITHUB_TOKEN }}
+          clean: true
