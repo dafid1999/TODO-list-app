@@ -1,0 +1,22 @@
+<div class="row gy-3">
+  @if ((tasks || []).length === 0) {
+    <div class="col-12">
+      <div class="alert alert-light border d-flex align-items-center" role="alert">
+        <div>
+          <strong>Brak wyników.</strong>
+          <span class="text-muted">Zmień kryteria filtrowania, aby zobaczyć zadania.</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  @for (task of tasks || []; track task.id || $index) {
+    <div class="col-12 col-sm-6 col-lg-4">
+      <app-task-item
+        [task]="task"
+        (statusChange)="statusChange.emit({ id: task.id, status: $event })"
+        (toggleDescription)="toggleDescription.emit(task.id)"
+        (deleteTask)="delete.emit(task.id)"></app-task-item>
+    </div>
+  }
+</div>

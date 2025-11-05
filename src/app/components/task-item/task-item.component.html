@@ -1,0 +1,60 @@
+<div class="card task-card shadow-sm"
+     [ngClass]="{
+       'status-planned': task.status === 'Zaplanowane',
+       'status-inprogress': task.status === 'W trakcie',
+       'status-done': task.status === 'Zrobione'
+     }">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-start gap-3">
+      <div class="flex-grow-1">
+        <div class="d-flex align-items-center flex-wrap gap-2">
+          <b class="task-title text-primary m-0">{{ task.name }}</b>
+        </div>
+        <div class="text-muted small mt-1">{{ task.date }}</div>
+      </div>
+
+      <button type="button"
+              class="btn-close flex-shrink-0"
+              aria-label="Usuń zadanie"
+              title="Usuń zadanie"
+              (click)="deleteTask.emit()"></button>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 mt-3 status-buttons">
+      <button type="button"
+              class="btn btn-sm"
+              [ngClass]="task.status === 'Zaplanowane' ? 'btn-outline-primary active' : 'btn-outline-primary faded'"
+              aria-label="Ustaw status na Zaplanowane"
+              (click)="statusChange.emit('Zaplanowane')">
+        Zaplanowane
+      </button>
+      <button type="button"
+              class="btn btn-sm"
+              [ngClass]="task.status === 'W trakcie' ? 'btn-outline-warning active' : 'btn-outline-warning faded'"
+              aria-label="Ustaw status na W trakcie"
+              (click)="statusChange.emit('W trakcie')">
+        W trakcie
+      </button>
+      <button type="button"
+              class="btn btn-sm"
+              [ngClass]="task.status === 'Zrobione' ? 'btn-outline-success active' : 'btn-outline-success faded'"
+              aria-label="Ustaw status na Zrobione"
+              (click)="statusChange.emit('Zrobione')">
+        Zrobione
+      </button>
+    </div>
+
+    <div class="mt-3">
+      <button class="btn btn-sm btn-outline-secondary show-desc-btn"
+              (click)="toggleDescription.emit()"
+              [attr.aria-expanded]="task.isDescriptionVisible"
+              [attr.aria-controls]="'desc-' + task.id"
+              aria-label="Przełącz widoczność opisu zadania">
+        {{ task.isDescriptionVisible ? 'Ukryj opis' : 'Pokaż opis' }}
+      </button>
+      @if (task.isDescriptionVisible) {
+        <p class="mt-2 mb-0 text-body" [attr.id]="'desc-' + task.id">{{ task.description }}</p>
+      }
+    </div>
+  </div>
+</div>

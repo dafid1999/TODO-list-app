@@ -1,0 +1,39 @@
+<form [formGroup]="taskForm" (ngSubmit)="addTask()">
+  <div class="mb-3 w-60">
+    <label for="taskName" class="form-label">Nazwa zadania:</label>
+    <input id="taskName" formControlName="name" class="form-control" aria-label="Nazwa zadania">
+    @if (taskForm.get('name')?.invalid && taskForm.get('name')?.touched) {
+      <div class="text-danger">Nazwa jest wymagana.</div>
+    }
+  </div>
+
+  <div class="mb-3 w-60">
+    <label for="taskDescription" class="form-label">Opis zadania:</label>
+    <textarea id="taskDescription" formControlName="description" class="form-control" rows="4" style="white-space: pre-wrap;" aria-label="Opis zadania"></textarea>
+  </div>
+
+  <div class="mb-3 w-60">
+    <label for="taskDate" class="form-label">Data zadania:</label>
+    <input id="taskDate" formControlName="date" type="date" class="form-control" appDatepickerPolyfill aria-label="Data zadania">
+    @if (taskForm.get('date')?.invalid && taskForm.get('date')?.touched) {
+      <div class="text-danger">Data jest wymagana.</div>
+    }
+    @if (taskForm.get('date')?.hasError('pastDate') && taskForm.get('date')?.touched) {
+      <div class="text-danger">Data nie może być z przeszłości.</div>
+    }
+  </div>
+
+  <div class="mb-3 w-60">
+    <label for="taskStatus" class="form-label">Status zadania:</label>
+    <select id="taskStatus" formControlName="status" class="form-control" aria-label="Status zadania">
+      <option value="W trakcie">W trakcie</option>
+      <option value="Zaplanowane">Zaplanowane</option>
+      <option value="Zrobione">Zrobione</option>
+    </select>
+  </div>
+
+  <div class="mt-3">
+    <button type="submit" class="btn btn-success me-2" [disabled]="taskForm.invalid" aria-label="Dodaj zadanie">Dodaj zadanie</button>
+    <button type="button" class="btn btn-secondary" (click)="closeForm()" aria-label="Anuluj dodawanie zadania">Anuluj</button>
+  </div>
+</form>

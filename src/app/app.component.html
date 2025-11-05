@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="d-flex my-4 align-items-center justify-content-between">
+    <h1 class="mb-0">Lista zadań</h1>
+    <button class="btn btn-primary" (click)="openAddTaskModal()" aria-label="Otwórz formularz dodawania zadania">Dodaj zadanie</button>
+  </div>
+
+  <app-task-filters
+    [name]="nameValue"
+    [date]="dateValue"
+    [status]="statusValue"
+    (nameChange)="onNameFilterChange($event)"
+    (dateChange)="onDateFilterChange($event)"
+    (statusChange)="onStatusFilterChange($event)"
+    (filtersReset)="resetFilters()"
+  ></app-task-filters>
+
+  <app-task-list
+    [tasks]="filteredTasks$ | async"
+    (statusChange)="taskService.changeTaskStatus($event.id, $event.status)"
+    (toggleDescription)="taskService.toggleDescription($event)"
+    (delete)="taskService.removeTask($event)">
+  </app-task-list>
+</div>
+
+<!-- Add task modal -->
+<div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true" #addTaskModal>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTaskModalLabel">Nowe zadanie</h5>
+        <button type="button" class="btn-close" (click)="closeAddTaskModal()" aria-label="Zamknij okno dodawania zadania"></button>
+      </div>
+      <div class="modal-body">
+        <app-add-task-form (taskAdded)="closeAddTaskModal()" (formClosed)="closeAddTaskModal()"></app-add-task-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky scroll-to-top button -->
+<button *ngIf="showScrollTop" type="button" class="btn btn-primary scroll-top-btn" aria-label="Przewiń do góry" title="Do góry"
+        (click)="scrollToTop()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+    </svg>
+</button>

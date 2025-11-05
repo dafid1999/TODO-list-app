@@ -1,0 +1,36 @@
+<section class="filters-card p-3 p-md-4 mb-4">
+  <div class="d-flex align-items-center mb-3">
+    <h2 class="h5 mb-0 filters-title">Filtrowanie zadań</h2>
+    <span class="ms-2 text-muted small">Wyszukaj po nazwie, dacie lub statusie</span>
+  </div>
+
+  <form class="row g-3" (submit)="$event.preventDefault()">
+    <div class="col-12 col-md-5">
+      <label for="filterTaskName" class="form-label">Nazwa</label>
+      <input type="text" class="form-control" id="filterTaskName" name="taskName" placeholder="Wpisz nazwę zadania"
+             [value]="name" #nameInput (input)="nameChange.emit(nameInput.value)" aria-label="Filtruj po nazwie zadania">
+    </div>
+
+    <div class="col-6 col-md-3">
+      <label for="filterTaskDate" class="form-label">Data</label>
+      <input type="text" class="form-control" id="filterTaskDate" name="taskDate" appDatepickerPolyfill
+             [value]="date" #dateInput (input)="dateChange.emit(dateInput.value)" (change)="dateChange.emit(dateInput.value)"
+             aria-label="Filtruj po dacie zadania">
+    </div>
+
+    <div class="col-6 col-md-3">
+      <label for="filterTaskStatus" class="form-label">Status</label>
+      <select class="form-select" id="filterTaskStatus" name="taskStatus"
+              [value]="status" #statusSelect (change)="statusChange.emit(statusSelect.value)" aria-label="Filtruj po statusie zadania">
+        <option value="">Dowolny</option>
+        <option value="W trakcie">W trakcie</option>
+        <option value="Zaplanowane">Zaplanowane</option>
+        <option value="Zrobione">Zrobione</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-md-1 d-flex align-items-end filters-actions">
+      <button type="button" class="btn btn-outline-secondary w-100" (click)="filtersReset.emit()" aria-label="Wyczyść filtry">Reset</button>
+    </div>
+  </form>
+</section>

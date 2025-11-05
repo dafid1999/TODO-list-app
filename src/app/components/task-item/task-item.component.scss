@@ -1,0 +1,31 @@
+:host { display: block; }
+
+.status-buttons .btn.faded { opacity: 0.5; }
+.status-buttons .btn.active { opacity: 1; font-weight: 600; }
+
+.task-card {
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 0.75rem;
+  transition: box-shadow .15s ease, transform .08s ease;
+}
+.task-card:hover { box-shadow: 0 .25rem .75rem rgba(0,0,0,.06); }
+
+.task-title { font-size: 1.05rem; }
+
+.task-card.status-planned { border-left: 4px solid #0d6efd; }
+.task-card.status-inprogress { border-left: 4px solid #ffc107; }
+.task-card.status-done { border-left: 4px solid #198754; }
+
+.show-desc-btn {
+  --bs-btn-padding-y: .25rem;
+  --bs-btn-padding-x: .5rem;
+  --bs-btn-font-size: .85rem;
+}
+
+@media (max-width: 575.98px) {
+  .task-title { font-size: 1rem; }
+  .task-card { border-radius: .65rem; }
+  .status-buttons .btn { padding: .25rem .5rem; }
+}
+
+@media (min-width: 992px) { .task-title { font-size: 1.1rem; } }

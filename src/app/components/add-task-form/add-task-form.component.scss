@@ -1,0 +1,7 @@
+.w-60 {
+  width: 60%;
+}
+
+@media (max-width: 575.98px) {
+  .w-60 { width: 100%; }
+}
