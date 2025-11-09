@@ -26,12 +26,12 @@ jobs:
         run: npm ci
 
       - name: Build production
-        run: npm run build -- --configuration production --output-path=dist --base-href "/TODO-list-app/"
+        run: npm run build -- --configuration production --output-path=dist/TODO-list-app --base-href "/TODO-list-app/"
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist
+          folder: dist/TODO-list-app
           token: ${{ secrets.GH_PAGES_TOKEN || github.token }}
           clean: true
